@@ -11,3 +11,7 @@
 /build/
 /.idea/
 /venv/
+log.html
+report.html
+output.xml
+/.eggs/
