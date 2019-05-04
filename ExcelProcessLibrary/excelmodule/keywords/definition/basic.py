@@ -114,7 +114,7 @@ class BasicKeywords(Base):
 			book.wb_book.save(path_to_file)
 		except IOError:
 			raise DirectoryNotFoundException(str("Directory not found: ") + path_to_file)
-		else:
-			print("Workbook saved: ", path_to_file)
+		#else:
+			#print("Workbook saved: ", path_to_file)
 
 
