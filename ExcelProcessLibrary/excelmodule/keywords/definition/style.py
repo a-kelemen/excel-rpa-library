@@ -1,9 +1,7 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 from __future__ import absolute_import, division, generators, print_function, unicode_literals
-#from keywords.base import Base
 from ..base import Base
-from ..exception import *
 from openpyxl import styles
 from openpyxl.styles import Font, Color
 
@@ -20,9 +18,7 @@ class StyleKeywords(Base):
 			try:
 				fill_color = Color(color)
 			except ValueError as e:
-				#Colors must be aRGB hex values
-				print("ValueError:"+ e.__class__.__name__)#TODO
-			#TODO raise Fail valueerror msg: Colors must be aRGB hex values or color names
+				print("color argument must be aRGB hex value or color name!")
 		my_fill = styles.fills.PatternFill(patternType='solid', fgColor=fill_color)
 		sheet.cell(row=row, column=col).fill = my_fill
 		book.wb_book.save(book.wb_path)
@@ -37,9 +33,7 @@ class StyleKeywords(Base):
 			try:
 				fill_color = Color(font_color)
 			except ValueError as e:
-				#Colors must be aRGB hex values
-				print("ValueError:" + e.__class__.__name__ + "ez a color:" + font_color)
-			#TODO raise Fail valueerror msg: Colors must be aRGB hex values or color names
+				print("color argument must be aRGB hex value or color name!")
 		font = sheet.cell(row=row, column=col).font
 		sheet.cell(row=row, column=col).font = Font(size=font.size,
 													color=fill_color,
@@ -86,4 +80,3 @@ class StyleKeywords(Base):
 
 	def remove_style(self, reference, selected_sheet, workbook):
 		self.set_cell_style(reference, "normal", selected_sheet, workbook)
-

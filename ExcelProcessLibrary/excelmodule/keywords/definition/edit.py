@@ -1,10 +1,7 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 from __future__ import absolute_import, division, generators, print_function, unicode_literals
-#from keywords.base import Base
 from ..base import Base
-from ..exception import *
-#from ..keywords import base
 from copy import copy
 import datetime
 import re
@@ -13,12 +10,9 @@ import re
 class EditKeywords(Base):
 
 	def set_cell_value(self, reference, value, selected_sheet, workbook, cell_type):
-		#TODO ha nem adok meg akkor probalja meg kideriteni hogy int vagy float -e, ha nem sikerul akkor legyen string
-		# tehat ne legyen alapertelmezett string a parameter
 		col, row = Base._get_coordinates_from_reference(reference)
 		book = self._get_workbook(workbook)
 		sheet = self._select_sheet(book, selected_sheet)
-		#print("type: " + cell_type)
 		cell = sheet.cell(row=row, column=col)
 		value = str(value)
 		if cell_type == "":
@@ -36,14 +30,11 @@ class EditKeywords(Base):
 			raise ValueError(cell_type + " is not a valid type!")
 
 		if cell_type == "string":
-			#print("string a tipusom")
 
 			cell.value = str(value)
-		if cell_type == "number":  #TODO
-			#print("number a tipusom")
+		if cell_type == "number":
 			try:
 				value = int(value)
-				#value = int(value)
 				cell.number_format = "0"
 				cell.value = value
 			except ValueError:
@@ -52,18 +43,15 @@ class EditKeywords(Base):
 				cell.value = value
 
 		if cell_type == "date":
-			#print("date a tipusom")
 			value = datetime.datetime.strptime(value, "%Y.%m.%d")
 			cell.number_format = "YYYY.MM.DD"
 			cell.value = value
 
 		if value == "":
-			#print("None")
 			cell.value = None
 		book.wb_book.save(book.wb_path)
 
 	def add_formula_to_cell(self, reference, formula, selected_sheet, workbook):
-		#TODO helyes function-e exception
 		self.set_cell_value(reference, formula, selected_sheet, workbook, "string")
 
 	def clear_cell(self, reference, selected_sheet, workbook):
@@ -114,8 +102,6 @@ class EditKeywords(Base):
 		book.wb_book.save(book.wb_path)
 
 	def copy_cell_from_workbook(self):
-		"""
-		"""
 		pass
 
 	def add_list_to_row(self, reference, items, selected_sheet, workbook, cell_type):
@@ -129,4 +115,3 @@ class EditKeywords(Base):
 		for cell_item in items:
 			self.set_cell_value(iter_reference, cell_item, selected_sheet, workbook, cell_type)
 			iter_reference = self._cell_below(iter_reference)
-

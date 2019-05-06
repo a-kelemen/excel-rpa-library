@@ -12,7 +12,6 @@ import os
 class BasicKeywords(Base):
 
 	def open_workbook(self, name, alias=None):
-		#print("ez a book: " + self.book)
 		wb_source = self._get_source(name)
 		if not os.path.exists(wb_source):
 			raise WorkbookNotFoundException(str("Workbook not found: ") + wb_source)
@@ -37,14 +36,10 @@ class BasicKeywords(Base):
 			del Base._books[workbook]
 		except KeyError:
 			raise WorkbookNotFoundException(workbook + " workbook is not open.")
-		#TODO logger.log vagy mi kell hogy kiirsja
-		#else:
-		#	print(workbook + " is closed.")
 
 	def close_all_workbooks(self):
 		for wbook in Base._books:
 			Base._books[wbook].wb_book.close()
-		#	print wbook + " is closed (close all)"
 		Base._books = {}
 
 	def create_worksheet(self, new_sheet_name, workbook):
@@ -83,7 +78,6 @@ class BasicKeywords(Base):
 		book = Base._get_workbook(workbook)
 		sheet = self._select_sheet(book, selected_sheet)
 		book.set_active_sheet(sheet.title)
-		#print("selected sheet is: ", sheet.title, " (set_active_Sheet)")
 
 	def rename_worksheet(self, selected_sheet, new_sheet_name, workbook):
 		book = Base._get_workbook(workbook)
@@ -101,20 +95,11 @@ class BasicKeywords(Base):
 
 	def save_workbook_as(self, new_workbook, workbook):
 		book = Base._get_workbook(workbook)
-		#workbook_path = book.folder
-		#filename_path = os.path.normpath(new_workbook)
-		#filename = os.path.basename(new_workbook)
 		path_to_file = self._get_source(new_workbook)
 		extension = os.path.splitext(path_to_file)[1]
 		if extension == "":
 			path_to_file += str(".xlsx")
-		#is_dir = os.path.isdir(path_to_file)
 		try:
-			#print("save folder:   " + path_to_file)
 			book.wb_book.save(path_to_file)
 		except IOError:
 			raise DirectoryNotFoundException(str("Directory not found: ") + path_to_file)
-		#else:
-			#print("Workbook saved: ", path_to_file)
-
-

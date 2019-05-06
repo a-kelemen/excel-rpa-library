@@ -9,9 +9,6 @@ from .excelmodule.keywords.definition.style import StyleKeywords
 
 
 def keyword(name=None):
-	#"from robot.api.deco import keyword" alapjan
-	#TODO ebbe az kell, hogy lefuttassa a keywordot, es ha sikres, akkor kiir valamit hogy sikeres hogy legyen
-	#valami haszna
 	if callable(name):
 		return keyword()(name)
 
@@ -21,7 +18,6 @@ def keyword(name=None):
 	return _method_wrapper
 
 
-#TODO tesztelni aq copy range tipusokkal
 class ExcelProcessLibrary(object):
 	__version__ = '0.1.0'
 
