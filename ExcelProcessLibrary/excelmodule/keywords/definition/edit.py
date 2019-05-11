@@ -20,7 +20,7 @@ class EditKeywords(Base):
 				cell_type = "date"
 			else:
 				try:
-					float(value)
+					float(value.replace(",", "."))
 				except ValueError:
 					cell_type = "string"
 				else:
@@ -38,7 +38,7 @@ class EditKeywords(Base):
 				cell.number_format = "0"
 				cell.value = value
 			except ValueError:
-				value = float(value)
+				value = float(value.replace(",", "."))
 				cell.number_format = "#,##0.00"
 				cell.value = value
 
